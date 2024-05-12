@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { UserContext } from "./context";
+import NavBar from "./components/Navbar";
+import Home from "./components/Home";
+import CreateAccount from "./components/CreateAccount";
+import Login from "./components/Login";
+import Deposit from "./components/Deposit";
+import Withdraw from "./components/Withdraw";
+import AllData from "./components/Alldata";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <NavBar />
+      <UserContext.Provider
+        value={{ users: [{ name: "abel", email: "abel@mit.edu", password: "secret", balance: 100 }] }}
+      >
+        <div className="container" style={{ padding: "20px" }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/createAccount/" element={<CreateAccount />} />
+            <Route path="/login/" element={<Login />} />
+            <Route path="/deposit/" element={<Deposit />} />
+            <Route path="/withdraw/" element={<Withdraw />} />
+            <Route path="/alldata/" element={<AllData />} />
+          </Routes>
+        </div>
+      </UserContext.Provider>
+    </Router>
   );
 }
 
 export default App;
+
