@@ -1,6 +1,7 @@
 import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { UserContext } from "./context";
+import { BankProvider } from "./components/BankContext";
 import NavBar from "./components/Navbar";
 import Home from "./components/Home";
 import CreateAccount from "./components/CreateAccount";
@@ -14,7 +15,7 @@ function App() {
     <Router>
       <NavBar />
       <UserContext.Provider
-        value={{ users: [{ name: "abel", email: "abel@mit.edu", password: "secret", balance: 100 }] }}
+        value={{ users: [{ username: 'luizperez', name: "Luiz", email: "Luiz@test.edu", password: "secret", balance: 100 }] }}
       >
         <div className="container" style={{ padding: "20px" }}>
           <Routes>

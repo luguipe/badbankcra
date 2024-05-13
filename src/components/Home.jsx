@@ -1,29 +1,16 @@
 import React from "react";
-import * as ReactBootstrap from "react-bootstrap";
-import axios from "axios";
-import {
-    Card,
-    Accordion,
-    Button,
-    Container,
-    Row,
-    Col,
-    Image,
-    list,
-    ListGroupItem,
-    Input
-  } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { UserContext } from "../context";
 
 export function Home(){
+    const ctx = React.useContext(UserContext);
     return (
-        <Card 
-            txtcolor="white"
-            bgcolor="dark"
-            header="Aria's Sketchy Bank"
-            title="Welcome to the most unreliable online bank."
-            text="Never expect to see your money back."
-            body={(<img src="bank.png" className="img-fluid" alt="responsive img" />)}
-        />
+        <Card bg="light" text="black" >
+            <Card.Header>Bad Bank Home</Card.Header>   
+            <Card.Text>Welcome to the bank</Card.Text>
+            <Card.Text>I wouldn't trust a bank, specially a bad one.</Card.Text>
+            <Card.Img variant="top" src="badBankBuilding.png" />
+        </Card>
     );
 }
 export default Home;

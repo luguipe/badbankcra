@@ -1,17 +1,12 @@
 import React from "react";
 import * as ReactBootstrap from "react-bootstrap";
 import axios from "axios";
-import {
-    Card,
-    Accordion,
-    Button,
-    Container,
-    Row,
-    Col,
-    Image,
-    list,
-    ListGroupItem,
-    Input
+import { Card, Button, 
+    Form, 
+    FormGroup, 
+    Label, 
+    Input, 
+    FormText
   } from "react-bootstrap";
   import { ReactDOM } from "react";
   import { UserContext } from "../context";
@@ -39,44 +34,44 @@ export function Deposit(){
     }
 
     return (
-        <Card
-        txtcolor="white"
-        bgcolor="dark"
-        header="Deposit"
-        body={
-            show ? (
-                currentUser ? (
-                    <>
-                        <h5>
-                            {update
-                            ? "Balance: " + currentUser.user.balance
-                            : "Balance: " +currentUser.user.balance}
-                        </h5>
-                        <h6>Deposit Amount</h6>
-                        <input
-                            type="number"
-                            width="200"
-                            id="balance"
-                            onChange={handleTextChange}
-                            value={value}
-                        ></input>
-                        <button 
-                            type="submit"
-                            disabled={value ? false : true}
-                            className="btn btn-light"
-                            onClick={handleDeposit}
-                        >
-                            Deposit
-                        </button>
-                    </>
+        <Card text="white" bg="dark">
+        <Card.Header>Deposit</Card.Header>
+            <Card.Body>
+                {show ? (
+                    currentUser ? (
+                        <>
+                            <Card.Title>
+                                {update
+                                    ? <Card.Text>"Balance: " + ${currentUser.user.balance}</Card.Text>
+                                    : <Card.Text>"Balance: " +${currentUser.user.balance}</Card.Text>
+                                }   
+                            </Card.Title>
+                            <Card.Title>Deposit Amount</Card.Title>
+                            <input
+                                type="number"
+                                width="200"
+                                id="balance"
+                                onChange={handleTextChange}
+                                value={value}
+                            ></input>
+                            <button 
+                                type="submit"
+                                disabled={value ? false : true}
+                                className="btn btn-light"
+                                onClick={handleDeposit}
+                            >
+                                Deposit
+                            </button>
+                        </>
+                    ) : (
+                        <Card.Text>"Please log in or create an account with us."</Card.Text>
+                    )
                 ) : (
-                    "Please log in or create an account with us."
+                    <Card.Text>"Success! Balance: $"${currentUser.user.balance}</Card.Text>
                 )
-            ) : (
-                "Success! Balance: $" + currentUser.user.balance
-            )
-        }
-        />
+            }
+            </Card.Body>
+        </Card>
     );
 }
 export default Deposit;

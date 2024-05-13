@@ -35,10 +35,17 @@ export function Login() {
         return true;
     }
 
-    function handleLogin() {
-        if (!checkEmptyField(email, 'email')) return;
-        if (!checkEmptyField(password, 'password')) return;
+    const handleLogin = () => {
+        if (!checkEmptyField(email, 'email'))
+            // console.log('email is empty');
+            return;
+        if (!checkEmptyField(password, 'password')) 
+            // console.log('Needs password');
+            return;
+            console.log("email: ", email, "Password: ", password);
+            
         const user = ctx.users.find((user) => user.email === email);
+        //it reaches here but is not validating the user
         if (!user) {
             setStatus("Invalid user, please check the spelling of your email or create an account with us.")
             setTimeout(() => setStatus(''), 3000)
@@ -52,9 +59,9 @@ export function Login() {
             setStatus("Invalid Password");
             setTimeout(() => setStatus(''), 2000);
         }
-    }
+    };
 
-    function clearForm(){
+    const clearForm = () =>{
         setName('')
         setEmail('')
         setPassword('')
@@ -62,27 +69,54 @@ export function Login() {
     }
 
     return (
-        <Card
-            bgcolor="dark"
-            txtcolor="white"
-            header="Log In"
-            status={status}
-            body={show ? (
+        <Card bg="primary" text="white">
+            <Card.Header>Log In</Card.Header>
+      
+            <Card.Body> {show ? (
                 <>
-                    Email address<br />
-                    <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.currentTarget.value)} /> <br />
-                    Password <br />
-                    <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.currentTarget.value)}/> <br />
-                    <button type="submit" className="btn btn-secondary" onClick={handleLogin}>Log in</button>
+                    <Card.Title>Email address</Card.Title>
+                    <input 
+                        type="input" 
+                        className="form-control" 
+                        id="email" 
+                        placeholder="Enter email" 
+                        value={email} 
+                        onChange={e => setEmail(e.currentTarget.value)} 
+                    /> 
+                    <br />
+                    <Card.Title>Password</Card.Title> 
+                        <input 
+                        type="password" 
+                        className="form-control" 
+                        id="password" 
+                        placeholder="Enter password" 
+                        value={password} 
+                        onChange={e => setPassword(e.currentTarget.value)}
+                    /> 
+                        <br />
+                    <button 
+                        type="submit" 
+                        className="btn btn-secondary" 
+                        onClick={handleLogin}
+                    >
+                        Log in
+                    </button>
                 </>
             ) : ( 
                 <>
-                    <h5>Success, please confirm login:</h5>
-                    <button type="submit" className="btn btn-secondary" onClick={clearForm}>Confirm</button>
+                    <Card.Title>Success, please confirm login:</Card.Title>
+                    <button 
+                        type="submit" 
+                        className="btn btn-secondary" 
+                        onClick={clearForm}
+                    >
+                        Confirm
+                    </button>
                 </>
             )
             }
-        />
+            </Card.Body>
+        </Card>
     );
 }
 export default Login;
