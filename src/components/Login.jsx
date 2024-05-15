@@ -3,10 +3,11 @@ import { Card } from "react-bootstrap";
 import { UserContext } from "../context";
 
 function Login() {
-  const ctx = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('');
+    
+    const ctx = useContext(UserContext);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [status, setStatus] = useState('');
 
   function handleLogin() {
     if (!email || !password) {
@@ -21,7 +22,7 @@ function Login() {
       return;
     }
     if (user.password === password) {
-      ctx.setLoggedInUser(user);
+        ctx.loginUser(email, password);
     } else {
       setStatus("Invalid email or password.");
       setTimeout(() => setStatus(''), 2000);
@@ -33,14 +34,15 @@ function Login() {
   }
 
   return (
+    
     <div>
       {ctx.loggedInUser ? (
         <div>
-          <h5>Welcome, {ctx.loggedInUser.name}!</h5>
+          <h5>Welcome, {ctx.loggedInUser}!</h5>
           <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <Card bgcolor="dark" text="white">
+        <Card bg="info" text="black">
           <Card.Body>
             <Card.Title>Login</Card.Title>
             <Card.Text>

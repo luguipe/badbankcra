@@ -1,16 +1,22 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const initialUserState = {
   users: [], // Your user data
   loggedInUser: null,
-  setLoggedInUser: (user) => {}, // Placeholder function
+  loginUser: (name,email, pwd, balance ) => {}, // Placeholder function
+  logoutUser: () => {}, // Placeholder function
 };
 
 export const UserContext = createContext(initialUserState);
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({  children }) => {
+
   const [users, setUsers] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    setUsers([{ name: "luiz", email: "luiz@test.com", password: "secret", balance: 100 }]);
+  }, []);
 
   const addUser = (user) => {
     setUsers([...users, user]);
@@ -23,14 +29,49 @@ export const UserProvider = ({ children }) => {
     setUsers(updatedUsers);
   };
 
+  const deposit = (amount) => {
+    const userIndex = users.findIndex(user => user.email === loggedInUser.email)
+
+    if(userIndex < 0) {
+      return false;
+    }
+
+    setUsers(curr => {
+      curr[userIndex] = {...loggedInUser, balance: loggedInUser.balance + amount};
+    })
+
+    return true;
+  }
+
+  const loginUser = (email, password)  => {
+    if (!email || !password) {
+      return false;
+    }
+    const user = users.find((user) => user.email === email);
+
+    if (!user || user.password !== password) {
+      return false;
+    }
+
+    setLoggedInUser(email);
+    return true;
+  }
+
+  const logoutUser = () => {
+    setLoggedInUser(null);
+  }
+
   return (
     <UserContext.Provider
-      value={{ users, loggedInUser, setLoggedInUser, addUser, updateUser }}
+      value={{ users, loginUser, logoutUser, loggedInUser, addUser, updateUser, deposit }}
     >
       {children}
     </UserContext.Provider>
   );
 };
+
+export const useUserContext = ()=> useContext(UserContext);
+
 
 // import React from "react";
 // import * as ReactBootstrap from "react-bootstrap";

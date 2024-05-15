@@ -1,6 +1,5 @@
 import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import { UserContext } from "./context";
 import NavBar from "./components/Navbar";
 import Home from "./components/Home";
 import CreateAccount from "./components/CreateAccount";
@@ -14,9 +13,7 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <UserProvider
-        value={{ users: [{ name: "luiz", email: "luiz@test.com", password: "secret", balance: 100 }] }}
-      >
+      <UserProvider>
         <div className="container" style={{ padding: "20px" }}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -33,6 +30,7 @@ function App() {
 }
 
 export default App;
+
 
 // import React from "react";
 // import { HashRouter as Router, Routes, Route } from "react-router-dom";

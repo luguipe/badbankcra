@@ -15,7 +15,7 @@ export function Withdraw() {
 
     function handleWithdraw() {
         let balance = document.getElementById("balance").value
-        if (value > 0 && currentUser.user.balance >= value && !isNaN(value)) {
+        if (value > 0 && currentUser.balance >= value && !isNaN(value)) {
             currentUser.user.baalnce -= Number(value);
             setUpdate('true');
             setShow('false');
@@ -35,8 +35,8 @@ export function Withdraw() {
                         <>
                             <h5>
                                 {update
-                                ? "Balance: " + currentUser.user.balance
-                                : "Balance: " + currentUser.user.balance}
+                                ? "Balance: " + currentUser.balance
+                                : "Balance: " + currentUser.balance}
                             </h5>
                             <h6>Withdraw Amount</h6>
                             <input 

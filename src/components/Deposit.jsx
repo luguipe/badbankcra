@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import * as ReactBootstrap from "react-bootstrap";
 import axios from "axios";
 import { Card, Button, 
@@ -10,10 +10,10 @@ import { Card, Button,
   } from "react-bootstrap";
   import { ReactDOM } from "react";
   import { UserContext } from "../context";
-
+  
 export function Deposit(){
-    const ctx = React.useContext(UserContext);
-    let currentUser = ctx.loggedIn[0];
+    const ctx = useContext(UserContext);
+    let currentUser = ctx.loggedInUser;
     const [update, setUpdate] = React.useState('false');
     const [value, setValue]   = React.useState('');
     const [show, setShow]     = React.useState(true);
@@ -25,7 +25,7 @@ export function Deposit(){
     function handleDeposit() {
         let balance = document.getElementById("balance").value;
         if(value > 0 && !isNaN(value)) {
-            currentUser.user.balance += Number(value);
+            currentUser.balance += Number(value);
             setUpdate('true');
             setShow('false');
         } else {
@@ -34,7 +34,7 @@ export function Deposit(){
     }
 
     return (
-        <Card text="white" bg="dark">
+        <Card text="white" bg="success">
         <Card.Header>Deposit</Card.Header>
             <Card.Body>
                 {show ? (
@@ -42,8 +42,8 @@ export function Deposit(){
                         <>
                             <Card.Title>
                                 {update
-                                    ? <Card.Text>"Balance: " + ${currentUser.user.balance}</Card.Text>
-                                    : <Card.Text>"Balance: " +${currentUser.user.balance}</Card.Text>
+                                    ? <Card.Text>`Balance:  + $`${currentUser.balance}</Card.Text>
+                                    : <Card.Text>`Balance:  + ${currentUser.balance}`</Card.Text>
                                 }   
                             </Card.Title>
                             <Card.Title>Deposit Amount</Card.Title>
@@ -67,7 +67,7 @@ export function Deposit(){
                         <Card.Text>"Please log in or create an account with us."</Card.Text>
                     )
                 ) : (
-                    <Card.Text>"Success! Balance: $"${currentUser.user.balance}</Card.Text>
+                    <Card.Text>"Success! Balance: $"${currentUser.balance}</Card.Text>
                 )
             }
             </Card.Body>
