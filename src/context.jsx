@@ -15,6 +15,10 @@ export const UserProvider = ({  children }) => {
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
+    const localUser = localStorage.getItem("loggedInUser");
+    console.log(localUser);
+    if (localUser) {setLoggedInUser(JSON.parse(localUser));}
+    
     setUsers([{ name: "luiz", email: "luiz@test.com", password: "secret", balance: 100 }]);
   }, []);
 
@@ -29,19 +33,26 @@ export const UserProvider = ({  children }) => {
     setUsers(updatedUsers);
   };
 
-  const deposit = (amount) => {
+  const changeBalance = (amount) => {
     const userIndex = users.findIndex(user => user.email === loggedInUser.email)
 
-    if(userIndex < 0) {
-      return false;
+        if(userIndex < 0) {
+        return {okay: false, message: "User not found"};
+        }
+
+        const balance = loggedInUser.balance + amount;
+        if(balance < 0) {
+            return {okay: false, message: "Insufficient funds"};
+        }
+
+        setUsers(currentUsers => {
+            currentUsers[userIndex] = {...loggedInUser, balance};
+            return [...currentUsers];
+        })
+
+        setLoggedInUser(curruentLoggedInUser => ({...curruentLoggedInUser, balance}));
+        return {okay: true, message: "Success"};
     }
-
-    setUsers(curr => {
-      curr[userIndex] = {...loggedInUser, balance: loggedInUser.balance + amount};
-    })
-
-    return true;
-  }
 
   const loginUser = (email, password)  => {
     if (!email || !password) {
@@ -53,17 +64,19 @@ export const UserProvider = ({  children }) => {
       return false;
     }
 
-    setLoggedInUser(email);
+    setLoggedInUser(user);
+    localStorage.setItem("loggedInUser", JSON.stringify(user)); // Save to local storage
     return true;
   }
 
   const logoutUser = () => {
+    localStorage.removeItem("loggedInUser");
     setLoggedInUser(null);
   }
 
   return (
     <UserContext.Provider
-      value={{ users, loginUser, logoutUser, loggedInUser, addUser, updateUser, deposit }}
+      value={{ users, loginUser, logoutUser, loggedInUser, addUser, updateUser, changeBalance }}
     >
       {children}
     </UserContext.Provider>

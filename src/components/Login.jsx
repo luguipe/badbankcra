@@ -38,7 +38,7 @@ function Login() {
     <div>
       {ctx.loggedInUser ? (
         <div>
-          <h5>Welcome, {ctx.loggedInUser}!</h5>
+          <h5>Welcome, {ctx.loggedInUser.name}!</h5>
           <button className="btn btn-secondary" onClick={handleLogout}>Logout</button>
         </div>
       ) : (
