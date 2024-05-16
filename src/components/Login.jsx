@@ -30,7 +30,7 @@ function Login() {
   }
 
   function handleLogout() {
-    ctx.setLoggedInUser(null);
+    ctx.logoutUser();
   }
 
   return (
