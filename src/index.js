@@ -4,15 +4,6 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap.min.js";
 
-// ReactDOM.render(
-//   <React.StrictMode>
- 
-//     <App />
-  
-// </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
